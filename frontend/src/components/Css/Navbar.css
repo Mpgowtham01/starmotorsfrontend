@@ -1,0 +1,90 @@
+.nav-container {
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  justify-content: space-between;
+  background: white;
+  border-bottom: 1px solid #e8e8e8;
+  font-family: "Inter", sans-serif;
+}
+
+/* Left Section */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav-logo {
+  height: 38px;
+}
+
+/* City Dropdown */
+.city-selector {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 15px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #f8f8f8;
+  cursor: pointer;
+  border: 1px solid #e5e5e5;
+}
+
+/* Search Bar */
+.nav-search {
+  width: 38%;
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  background: #f4f4f4;
+  border-radius: 10px;
+  border: 1px solid #e1e1e1;
+}
+
+.nav-search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+}
+
+.search-icon {
+  opacity: 0.7;
+}
+
+/* Right Menu */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.nav-right span {
+  cursor: pointer;
+}
+
+/* Wishlist Button */
+.wishlist {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+/* Account Box */
+.account-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  cursor: pointer;
+}
