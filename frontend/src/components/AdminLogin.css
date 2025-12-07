@@ -1,0 +1,127 @@
+/* Background */
+.new-login-container {
+  height: 97vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f5f7fa;
+}
+
+/* Card */
+.new-login-card {
+  width: 420px;
+  background: white;
+  padding: 40px 35px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Title */
+.new-login-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+/* Error message */
+.new-error-text {
+  text-align: center;
+  color: #ff4d4d;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Form */
+.new-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Floating Label Group */
+.floating-group {
+  position: relative;
+}
+
+.floating-group input {
+  width: 80%;
+  padding: 14px 45px 14px 45px;
+  border-radius: 10px;
+  border: 1.5px solid #ccc;
+  font-size: 15px;
+  outline: none;
+  background: transparent;
+  transition: 0.3s ease;
+}
+
+.floating-group input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+}
+
+/* Labels */
+.floating-group label {
+  position: absolute;
+  left: 45px;
+  top: 14px;
+  color: #777;
+  font-size: 15px;
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+.floating-group input:focus + label,
+.floating-group input:not(:placeholder-shown) + label {
+  top: -8px;
+  left: 40px;
+  background: white;
+  padding: 0 6px;
+  font-size: 13px;
+  color: #007bff;
+}
+
+/* Icons */
+.floating-icon {
+  position: absolute;
+  left: 12px;
+  top: 15px;
+  font-size: 18px;
+  color: #777;
+}
+
+/* Password eye icon */
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  font-size: 18px;
+  color: #777;
+  cursor: pointer;
+}
+
+/* Button */
+.new-login-btn {
+  width: 100%;
+  padding: 14px;
+  background: #007bff;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.new-login-btn:hover {
+  background: #0056d2;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+}

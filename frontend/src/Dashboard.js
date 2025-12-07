@@ -1,8 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import TestimonialSection from "./components/TestimonialSection";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
+  const [bikes, setBikes] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getBikeList();
+  }, []);
+
+  const getBikeList = async () => {
+    try {
+      const response = await axios.get(
+        "https://starmotorsbackend.onrender.com/bike/getall"
+      );
+
+      const formatted = response.data.data.map((b) => ({
+        id: b._id,
+        name: `${b.brand} ${b.model}`,
+        offerPrice: b.offerPrice,
+        price: b.price,
+        km: b.kmsDriven,
+        owner: `${b.ownerCount} Owner`,
+        year: b.registrationYear,
+        location: b.city,
+        img: b.images || "",
+        singleImg: b.images[0] || "",
+        engine: b.engine,
+        rctransfer: b.rctransfer,
+        fuel: b.fuel,
+        keyfeatures: b.keyfeatures,
+        insurance: b.insurance,
+        biketype: b.biketype,
+      }));
+
+      setBikes(formatted);
+    } catch (err) {
+      console.log("API Error: ", err);
+    }
+  };
+
   return (
     <div style={{ fontFamily: "Inter, sans-serif" }}>
       {/* ---------------- NAVBAR ---------------- */}
@@ -43,7 +84,7 @@ export default function Dashboard() {
           🔥 Hot Offers <span style={{ color: "#ff6b00" }}>This Week</span>
         </h1>
 
-        <div style={styles.carouselContainer}>
+        {/* <div style={styles.carouselContainer}>
           {[
             {
               name: "Royal Enfield Classic 350",
@@ -131,6 +172,53 @@ export default function Dashboard() {
               </div>
             </div>
           ))}
+        </div> */}
+
+        <div style={styles.carouselContainer}>
+          {bikes.map((bike, i) => {
+            const original = Number(bike.price);
+            const offer = Number(bike.offerPrice);
+            const discount = Math.round(((original - offer) / original) * 100);
+
+            return (
+              <div
+                key={i}
+                style={styles.offerCard}
+                onClick={() => navigate("/bike-details", { state: bike })}
+              >
+                {/* Discount Badge */}
+                <div style={styles.discountBadge}>{discount}% OFF</div>
+
+                <img
+                  src={bike.singleImg}
+                  alt={bike.name}
+                  style={styles.offerCardImg}
+                />
+
+                <div style={styles.offerCardContent}>
+                  <h3 style={styles.bikeName}>{bike.name}</h3>
+
+                  <div style={styles.bikeDetails}>
+                    <span>🗓️ {bike.year}</span>
+                    <span>📍 {bike.km} km</span>
+                  </div>
+
+                  <div style={styles.priceSection}>
+                    <div>
+                      <div style={styles.currentPrice}>₹{bike.offerPrice}</div>
+                      <div style={styles.originalPrice}>₹{bike.price}</div>
+                    </div>
+                    <button
+                      style={styles.viewBtn}
+                      onClick={() => navigate("/bike-details", { state: bike })}
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -193,7 +281,7 @@ export default function Dashboard() {
 
         <button style={styles.sellBtn}>Sell Now</button>
       </section>
-
+      <TestimonialSection />
       {/* ---------------- FOOTER ---------------- */}
       <Footer />
       {/* <footer style={styles.footer}>

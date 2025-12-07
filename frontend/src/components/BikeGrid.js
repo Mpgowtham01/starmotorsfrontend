@@ -1,66 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BikeCard from "./BikeCard";
+import axios from "axios";
 
-export default function BikeGrid() {
-  const bikes = [
-    {
-      name: "Bajaj Avenger Street 220",
-      offerPrice: "79,999",
-      price: "₹69,800",
-      km: "38,836",
-      owner: "1st Owner",
-      year: "2016",
-      offerText: "₹10,199 OFF Today!",
-      location: "Nagarbhavi, Bangalore",
-      img: "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?fm=jpg&q=60&w=3000",
-    },
-    {
-      name: "Bajaj Pulsar NS 160",
-      offerPrice: "79,999",
-      price: "₹94,500",
-      km: "15,243",
-      owner: "1st Owner",
-      year: "2020",
-      offerText: "₹10,199 OFF Today!",
-      location: "Nagarbhavi, Bangalore",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJknkqvtJd9hz1linMCb5gJkw_KQmU8_qDRA&s",
-    },
-    {
-      name: "Bajaj Pulsar 150",
-      offerPrice: "79,999",
-      price: "₹58,850",
-      km: "29,000",
-      owner: "2nd Owner",
-      year: "2018",
-      offerText: "₹10,199 OFF Today!",
-      location: "Nagarbhavi, Bangalore",
-      img: "https://images.overdrive.in/wp-content/odgallery/2022/08/63809_2022_Royal_Enfield_Hunter_350_468x263.jpg",
-    },
-    {
-      name: "Royal Enfield Classic 350",
-      price: "1,45,000",
-      offerPrice: "1,36,000",
-      km: "12,000",
-      owner: "1st Owner",
-      year: "2019",
-      location: "Theni",
-      img: "https://images.overdrive.in/wp-content/odgallery/2022/08/63809_2022_Royal_Enfield_Hunter_350.jpg",
-    },
-    {
-      name: "Royal Enfield Classic 350",
-      price: "1,45,000",
-      offerPrice: "1,36,000",
-      km: "12,000",
-      owner: "1st Owner",
-      year: "2019",
-      location: "Theni",
-      img: "https://images.overdrive.in/wp-content/odgallery/2022/08/63809_2022_Royal_Enfield_Hunter_350.jpg",
-    },
-  ];
+export default function BikeGrid({ filterType }) {
+  const [bikes, setBikes] = useState([]);
+
+  const [filtered, setFiltered] = useState([]);
+
+  useEffect(() => {
+    getBikeList();
+  }, []);
+
+  const getBikeList = async () => {
+    try {
+      const response = await axios.get(
+        "https://starmotorsbackend.onrender.com/bike/getall"
+      );
+
+      const formatted = response.data.data.map((b) => ({
+        id: b._id,
+        name: `${b.brand} ${b.model}`,
+        offerPrice: b.offerPrice,
+        price: b.price,
+        km: b.kmsDriven,
+        owner: `${b.ownerCount} Owner`,
+        year: b.registrationYear,
+        location: b.city,
+        img: b.images || "",
+        singleImg: b.images[0] || "",
+        engine: b.engine,
+        rctransfer: b.rctransfer,
+        fuel: b.fuel,
+        keyfeatures: b.keyfeatures,
+        insurance: b.insurance,
+        biketype: b.biketype,
+      }));
+
+      setBikes(formatted);
+    } catch (err) {
+      console.log("API Error: ", err);
+    }
+  };
+
+  useEffect(() => {
+    if (!filterType || filterType == "all") {
+      setFiltered(bikes);
+    } else {
+      setFiltered(bikes.filter((b) => b.biketype === filterType));
+    }
+  }, [filterType, bikes]);
 
   return (
     <div style={styles.grid}>
-      {bikes.map((b, i) => (
+      {filtered.map((b, i) => (
         <BikeCard key={i} data={b} />
       ))}
     </div>
@@ -71,7 +63,42 @@ const styles = {
   grid: {
     display: "grid",
     gap: 20,
-    gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+    justifyContent: "start",
+    alignItems: "start",
     marginTop: 20,
+  },
+  "@media(max-width: 768px)": {
+    container: {
+      position: "fixed",
+      left: 0,
+      top: 0,
+      height: "100%",
+      width: "75%",
+      maxWidth: 260,
+      background: "#fff",
+      padding: 20,
+      zIndex: 20,
+      transform: "translateX(-100%)",
+      transition: "transform 0.3s ease",
+    },
+
+    drawerOpen: {
+      transform: "translateX(0%)",
+    },
+
+    drawerClosed: {
+      transform: "translateX(-100%)",
+    },
+
+    mobileBtn: {
+      display: "block",
+      padding: "10px 15px",
+      background: "#000",
+      color: "#fff",
+      borderRadius: 6,
+      border: "none",
+      marginBottom: 15,
+    },
   },
 };

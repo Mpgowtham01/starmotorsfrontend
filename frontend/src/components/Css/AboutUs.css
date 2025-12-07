@@ -1,0 +1,196 @@
+/* ---------- MAIN CONTAINER ---------- */
+.about-container {
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* ---------- HERO SECTION ---------- */
+.about-hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.about-hero h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #ff6a00;
+}
+
+.about-hero p {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #444;
+}
+
+/* ---------- WHO WE ARE ---------- */
+.about-section {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.about-section h2 {
+  font-size: 30px;
+  color: #222;
+  margin-bottom: 15px;
+}
+
+.about-section p {
+  font-size: 17px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* ---------- 3 CARDS SECTION ---------- */
+.about-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.about-card {
+  width: 260px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: 0.3s ease-in-out;
+}
+
+.about-card:hover {
+  transform: translateY(-6px);
+}
+
+.about-icon {
+  font-size: 50px;
+  color: #ff6a00;
+  margin-bottom: 15px;
+}
+
+/* ---------- MISSION SECTION ---------- */
+.mission-section {
+  max-width: 800px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.mission-section p {
+  font-size: 17px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* ---------- WHY CHOOSE US ---------- */
+.choose-section {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.choose-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.choose-card {
+  width: 260px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: 0.3s;
+}
+
+.choose-card:hover {
+  transform: translateY(-6px);
+}
+
+.choose-icon {
+  font-size: 45px;
+  color: #ff6a00;
+  margin-bottom: 12px;
+}
+
+/* ---------- PROCESS SECTION ---------- */
+.process-section {
+  max-width: 800px;
+  margin: 50px auto;
+}
+
+.process-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.process-section ol {
+  margin-top: 15px;
+  font-size: 17px;
+  color: #444;
+  line-height: 1.7;
+}
+
+.process-section li {
+  margin-bottom: 10px;
+}
+
+/* ------------------------------------------------------------------
+                      MEDIA QUERIES
+------------------------------------------------------------------ */
+
+/* ---------- Tablets (<=900px) ---------- */
+@media screen and (max-width: 900px) {
+  .about-hero h1 {
+    font-size: 30px;
+  }
+
+  .about-section h2,
+  .mission-section h2,
+  .choose-section h2 {
+    font-size: 26px;
+  }
+
+  .about-card,
+  .choose-card {
+    width: 230px;
+  }
+}
+
+/* ---------- Mobile (<=600px) ---------- */
+@media screen and (max-width: 600px) {
+  .about-hero h1 {
+    font-size: 26px;
+  }
+
+  .about-hero p {
+    font-size: 16px;
+  }
+
+  .about-section p,
+  .mission-section p {
+    font-size: 15px;
+  }
+
+  .about-cards,
+  .choose-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-card,
+  .choose-card {
+    width: 90%;
+  }
+
+  .process-section {
+    padding: 0 10px;
+  }
+
+  .process-section ol {
+    font-size: 15px;
+  }
+}

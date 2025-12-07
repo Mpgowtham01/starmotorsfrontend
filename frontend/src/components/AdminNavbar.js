@@ -3,7 +3,7 @@ import { Menu, X, Phone, MapPin } from "lucide-react";
 import SellBikeModal from "./SellBikeModal";
 import { useNavigate } from "react-router-dom";
 
-export default function Navbar() {
+export default function AdminNavbar() {
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -11,7 +11,6 @@ export default function Navbar() {
 
   const navigate = useNavigate();
 
-  // Detect screen width
   useEffect(() => {
     const checkScreen = () => {
       setIsMobile(window.innerWidth <= 968);
@@ -23,26 +22,13 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", checkScreen);
   }, []);
 
+  const handleSubmit = () => {
+    localStorage.clear();
+    navigate("/adminlogin");
+  };
+
   return (
     <div style={styles.wrapper}>
-      {/* -------- Top Bar -------- */}
-      <div style={styles.topBar}>
-        <div style={styles.topBarContent}>
-          <div style={styles.topBarLeft}>
-            <div style={styles.topBarItem}>
-              <Phone size={14} /> <span>+91 7666377661</span>
-            </div>
-            <div style={styles.topBarItem}>
-              <MapPin size={14} /> <span>Cumbum</span>
-            </div>
-          </div>
-
-          <div style={styles.topBarRight}>
-            <span style={styles.topBarLink}>Help & Support</span>
-          </div>
-        </div>
-      </div>
-
       {/* -------- Navbar -------- */}
       <nav style={styles.navbar}>
         <div style={styles.navContent}>
@@ -57,29 +43,8 @@ export default function Navbar() {
           {/* Desktop Menu (hide on mobile) */}
           {!isMobile && (
             <div style={styles.desktopMenu}>
-              <span style={styles.menuItem} onClick={() => navigate("/bike")}>
-                Buy Bike
-              </span>
-              <span
-                style={styles.menuItem}
-                onClick={() => {
-                  setShowSellModal(true);
-                  setMobileMenuOpen(false);
-                }}
-              >
-                Sell Your Bike
-              </span>
-              <span
-                style={styles.menuItem}
-                onClick={() => navigate("/contactus")}
-              >
-                Contact Us
-              </span>
-              <span
-                style={styles.menuItem}
-                onClick={() => navigate("/aboutus")}
-              >
-                About Us
+              <span style={styles.menuItem} onClick={() => handleSubmit()}>
+                Logout
               </span>
             </div>
           )}
@@ -102,28 +67,7 @@ export default function Navbar() {
               style={styles.mobileMenuItem}
               onClick={() => navigate("/bike")}
             >
-              Buy Bikes
-            </div>
-            <div
-              style={styles.mobileMenuItem}
-              onClick={() => {
-                setShowSellModal(true);
-                setMobileMenuOpen(false);
-              }}
-            >
-              Sell Your Bike
-            </div>
-            <div
-              style={styles.mobileMenuItem}
-              onClick={() => navigate("/contactus")}
-            >
-              Contact Us
-            </div>
-            <div
-              style={styles.mobileMenuItem}
-              onClick={() => navigate("/aboutus")}
-            >
-              About Us
+              Logout
             </div>
           </div>
         )}
@@ -213,7 +157,7 @@ const styles = {
 
   menuItem: {
     cursor: "pointer",
-    fontSize: "15px",
+    fontSize: "18px",
     fontWeight: 500,
   },
 

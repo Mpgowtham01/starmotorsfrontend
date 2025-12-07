@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import "../components/Css/Footer.css";
+import { useNavigate } from "react-router-dom";
+import SellBikeModal from "./SellBikeModal";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaTwitter,
+  FaWhatsapp,
+} from "react-icons/fa";
 
 export default function Footer() {
-  const quickLinks1 = ["Buy Bike", "Sell Bike", "About Us", "Contact Us"];
+  const [showSellModal, setShowSellModal] = useState(false);
 
   const registeredAddress = [
     "Star Motors",
@@ -11,6 +19,8 @@ export default function Footer() {
     "Theni, 625 516",
     "Email: support@gmail.com",
   ];
+
+  const navigate = useNavigate();
 
   return (
     <footer className="footer-container">
@@ -28,23 +38,42 @@ export default function Footer() {
         </p>
 
         <div className="footer-socialRow">
-          <span>📘</span>
-          <span>🐦</span>
-          <span>💼</span>
-          <span>📷</span>
-          <span>▶️</span>
-          <span>🟢</span>
+          <a href="#" className="social-icon">
+            <FaFacebookF />
+          </a>
+          <a href="#" className="social-icon">
+            <FaInstagram />
+          </a>
+          <a href="#" className="social-icon">
+            <FaTwitter />
+          </a>
+          <a href="#" className="social-icon">
+            <FaWhatsapp />
+          </a>
         </div>
       </div>
 
       {/* QUICK LINKS */}
       <div className="footer-column">
         <h3 className="footer-heading">Quick Links</h3>
-        {quickLinks1.map((item, i) => (
-          <span key={i} className="footer-link">
-            {item}
-          </span>
-        ))}
+
+        <span className="footer-link" onClick={() => navigate("/bike")}>
+          Buy Bike
+        </span>
+        <span
+          className="footer-link"
+          onClick={() => {
+            setShowSellModal(true);
+          }}
+        >
+          Sell Bike
+        </span>
+        <span className="footer-link" onClick={() => navigate("/aboutus")}>
+          About Us
+        </span>
+        <span className="footer-link" onClick={() => navigate("/contactus")}>
+          Contact Us
+        </span>
       </div>
 
       {/* ADDRESS */}
@@ -60,6 +89,11 @@ export default function Footer() {
       <div className="footer-copyRow">
         ©2025 Star Motors. All rights reserved.
       </div>
+
+      <SellBikeModal
+        show={showSellModal}
+        close={() => setShowSellModal(false)}
+      />
     </footer>
   );
 }
