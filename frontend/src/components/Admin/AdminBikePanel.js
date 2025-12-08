@@ -3,7 +3,7 @@ import { FaEdit, FaTrash, FaPlus, FaTimes, FaSave } from "react-icons/fa";
 import AdminNavbar from "../AdminNavbar";
 import { Select } from "antd";
 
-const API_URL = "https://starmotorsbackend.onrender.com/bike";
+const API_URL = "http://localhost:8080/bike";
 
 export default function AdminBikePanel() {
   const [bikes, setBikes] = useState([]);
@@ -28,11 +28,11 @@ export default function AdminBikePanel() {
     description: "",
     registeredState: "",
     keyfeatures: [],
-    insurance: "",
+    insurance: "Yes",
     rctransfer: "Yes",
     engine: "",
     fuel: "Petrol",
-    biketype: "",
+    biketype: "motorcycle",
     isActive: true,
   });
   console.log("formData :>> ", formData);
@@ -122,11 +122,11 @@ export default function AdminBikePanel() {
       description: "",
       registeredState: "",
       keyfeatures: [],
-      insurance: "",
+      insurance: "Yes",
       rctransfer: "Yes",
       engine: "",
       fuel: "Petrol",
-      biketype: "",
+      biketype: "motorcycle",
       isActive: true,
     });
     setShowModal(true);

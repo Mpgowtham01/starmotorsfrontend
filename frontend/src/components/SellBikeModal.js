@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Modal, Input } from "antd";
+import { Modal, Input, notification } from "antd";
 
 export default function SellBikeModal({ show, close }) {
   const [form, setForm] = useState({
     mobile: "",
+    email: "",
     model: "",
     year: "",
     kms: "",
@@ -11,8 +12,85 @@ export default function SellBikeModal({ show, close }) {
     pincode: "",
   });
 
+  const [errors, setErrors] = useState({});
+
   const change = (field, value) => {
     setForm({ ...form, [field]: value });
+
+    if (errors[field]) {
+      setErrors({ ...errors, [field]: "" });
+    }
+  };
+
+  // Validation function
+  const validate = () => {
+    let newErrors = {};
+
+    if (!form.mobile.trim()) newErrors.mobile = "Mobile number is required";
+    else if (form.mobile.length !== 10)
+      newErrors.mobile = "Enter a valid 10-digit mobile number";
+
+    if (!form.email.trim()) newErrors.email = "Email is required";
+    else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(form.email))
+        newErrors.email = "Invalid email address";
+    }
+
+    if (!form.model.trim()) newErrors.model = "Vehicle model is required";
+
+    if (!form.year.trim()) newErrors.year = "Registration year is required";
+
+    if (!form.kms.trim()) newErrors.kms = "Kms Driven is required";
+
+    if (!form.ownership.trim())
+      newErrors.ownership = "Ownership information is required";
+
+    if (!form.pincode.trim()) newErrors.pincode = "Pincode is required";
+    else if (form.pincode.length !== 6)
+      newErrors.pincode = "Enter a valid 6-digit pincode";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const submitForm = async () => {
+    if (!validate()) return;
+
+    const res = await fetch("http://localhost:8080/bike/sell-bike", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+    console.log(data);
+
+    if (data.success) {
+      notification.success({
+        message: "Success",
+        description: "Your request has been submitted successfully!",
+      });
+
+      setForm({
+        mobile: "",
+        email: "",
+        model: "",
+        year: "",
+        kms: "",
+        ownership: "",
+        pincode: "",
+      });
+
+      close();
+    }
+  };
+
+  const errorStyle = {
+    color: "red",
+    fontSize: 12,
+    marginTop: -15,
+    marginBottom: -10,
   };
 
   return (
@@ -25,42 +103,89 @@ export default function SellBikeModal({ show, close }) {
       centered
     >
       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-        <Input
-          placeholder="Mobile *"
-          value={form.mobile}
-          onChange={(e) => change("mobile", e.target.value)}
-          size="large"
-        />
-        <Input
-          placeholder="Vehicle Model"
-          value={form.model}
-          onChange={(e) => change("model", e.target.value)}
-          size="large"
-        />
-        <Input
-          placeholder="Registration year"
-          value={form.year}
-          onChange={(e) => change("year", e.target.value)}
-          size="large"
-        />
-        <Input
-          placeholder="Kms Driven"
-          value={form.kms}
-          onChange={(e) => change("kms", e.target.value)}
-          size="large"
-        />
-        <Input
-          placeholder="Ownership"
-          value={form.ownership}
-          onChange={(e) => change("ownership", e.target.value)}
-          size="large"
-        />
-        <Input
-          placeholder="Area Pincode"
-          value={form.pincode}
-          onChange={(e) => change("pincode", e.target.value)}
-          size="large"
-        />
+        {/* MOBILE */}
+        <div>
+          <Input
+            placeholder="Mobile *"
+            value={form.mobile}
+            onChange={(e) => change("mobile", e.target.value)}
+            size="large"
+            status={errors.mobile ? "error" : ""}
+          />
+          {errors.mobile && <div style={errorStyle}>{errors.mobile}</div>}
+        </div>
+
+        {/* EMAIL */}
+        <div>
+          <Input
+            placeholder="Email *"
+            value={form.email}
+            onChange={(e) => change("email", e.target.value)}
+            size="large"
+            status={errors.email ? "error" : ""}
+          />
+          {errors.email && <div style={errorStyle}>{errors.email}</div>}
+        </div>
+
+        {/* MODEL */}
+        <div>
+          <Input
+            placeholder="Vehicle Model *"
+            value={form.model}
+            onChange={(e) => change("model", e.target.value)}
+            size="large"
+            status={errors.model ? "error" : ""}
+          />
+          {errors.model && <div style={errorStyle}>{errors.model}</div>}
+        </div>
+
+        {/* YEAR */}
+        <div>
+          <Input
+            placeholder="Registration Year *"
+            value={form.year}
+            onChange={(e) => change("year", e.target.value)}
+            size="large"
+            status={errors.year ? "error" : ""}
+          />
+          {errors.year && <div style={errorStyle}>{errors.year}</div>}
+        </div>
+
+        {/* KMS */}
+        <div>
+          <Input
+            placeholder="Kms Driven *"
+            value={form.kms}
+            onChange={(e) => change("kms", e.target.value)}
+            size="large"
+            status={errors.kms ? "error" : ""}
+          />
+          {errors.kms && <div style={errorStyle}>{errors.kms}</div>}
+        </div>
+
+        {/* OWNERSHIP */}
+        <div>
+          <Input
+            placeholder="Ownership *"
+            value={form.ownership}
+            onChange={(e) => change("ownership", e.target.value)}
+            size="large"
+            status={errors.ownership ? "error" : ""}
+          />
+          {errors.ownership && <div style={errorStyle}>{errors.ownership}</div>}
+        </div>
+
+        {/* PINCODE */}
+        <div>
+          <Input
+            placeholder="Area Pincode *"
+            value={form.pincode}
+            onChange={(e) => change("pincode", e.target.value)}
+            size="large"
+            status={errors.pincode ? "error" : ""}
+          />
+          {errors.pincode && <div style={errorStyle}>{errors.pincode}</div>}
+        </div>
       </div>
 
       <div
@@ -94,6 +219,7 @@ export default function SellBikeModal({ show, close }) {
             borderRadius: 6,
             cursor: "pointer",
           }}
+          onClick={submitForm}
         >
           SUBMIT
         </button>

@@ -21,7 +21,6 @@ export default function BikeDetailsPage() {
   const [selectedImage, setSelectedImage] = useState(state?.img?.[0] || "");
   const [bikes, setBikes] = useState([]);
   const [relatedBikes, setRelatedBikes] = useState([]);
-  console.log("state :>> ", state);
 
   useEffect(() => {
     getBikeList();
@@ -81,6 +80,8 @@ export default function BikeDetailsPage() {
 
   const handleBikeClick = (bike) => {
     navigate("/bike-details", { state: bike });
+    console.log("bike :>> ", bike);
+    setSelectedImage(bike.img[0]);
     window.scrollTo(0, 0);
   };
 
@@ -96,21 +97,22 @@ export default function BikeDetailsPage() {
     <div style={{ fontFamily: "Inter, sans-serif" }}>
       <Navbar />
       <div style={styles.page}>
-        <div style={styles.breadcrumb}>
-          <span style={styles.breadcrumbLink} onClick={() => handleSubmit()}>
-            Home
-          </span>
-          <span style={styles.breadcrumbSeparator}>/</span>
-          <span
-            style={styles.breadcrumbLink}
-            onClick={() => handleSubmitBike()}
-          >
-            Bikes
-          </span>
-          <span style={styles.breadcrumbSeparator}>/</span>
-          <span style={styles.breadcrumbCurrent}>{state.name}</span>
+        <div style={styles.container}>
+          <div style={styles.breadcrumb}>
+            <span style={styles.breadcrumbLink} onClick={() => handleSubmit()}>
+              Home
+            </span>
+            <span style={styles.breadcrumbSeparator}>/</span>
+            <span
+              style={styles.breadcrumbLink}
+              onClick={() => handleSubmitBike()}
+            >
+              Bikes
+            </span>
+            <span style={styles.breadcrumbSeparator}>/</span>
+            <span style={styles.breadcrumbCurrent}>{state.name}</span>
+          </div>
         </div>
-
         <div style={styles.container}>
           {/* LEFT SIDE */}
           <div style={styles.left}>

@@ -151,7 +151,7 @@ export default function Filters({ setFilterType }) {
         >
           <RiBikeLine size={24} />
           <span style={styles.label}>All Bikes</span>
-          <span style={styles.count}>890</span>
+          {/* <span style={styles.count}>890</span> */}
         </div>
 
         {/* MOTORCYCLE */}
@@ -166,7 +166,7 @@ export default function Filters({ setFilterType }) {
         >
           <FaMotorcycle size={24} />
           <span style={styles.label}>Motorcycle</span>
-          <span style={styles.count}>1419</span>
+          {/* <span style={styles.count}>1419</span> */}
         </div>
 
         {/* SCOOTER */}
@@ -179,7 +179,7 @@ export default function Filters({ setFilterType }) {
         >
           <GiScooter size={24} />
           <span style={styles.label}>Scooter</span>
-          <span style={styles.count}>417</span>
+          {/* <span style={styles.count}>417</span> */}
         </div>
       </div>
     </>

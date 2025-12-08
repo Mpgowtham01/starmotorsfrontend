@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Css/ContactUs.css";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
@@ -11,17 +13,41 @@ export default function ContactUs() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const validate = () => {
+    if (!form.name.trim()) return toast.error("Name is required");
+    if (!form.email.trim()) return toast.error("Email is required");
+    if (!form.message.trim()) return toast.error("Message is required");
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Your message has been sent!");
+
+    if (!validate()) return;
+
+    const res = await fetch("http://localhost:8080/bike/send-message", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      toast.success("Message sent successfully!");
+      setForm({ name: "", email: "", message: "" });
+    } else {
+      toast.error("Something went wrong!");
+    }
   };
 
   return (
     <div style={{ fontFamily: "Inter, sans-serif" }}>
       <Navbar />
+      <ToastContainer position="top-center" />
 
       <div className="contact-wrapper">
-        {/* Left Side */}
+        {/* Left */}
         <div className="contact-card left-card">
           <h1 className="contact-heading">Get in Touch</h1>
           <p className="contact-subtext">
@@ -30,7 +56,7 @@ export default function ContactUs() {
 
           <div className="contact-item">
             <FaPhone className="contact-icon" />
-            <span>+91 98765 43210</span>
+            <span>+91 80983 22773</span>
           </div>
 
           <div className="contact-item">
@@ -40,7 +66,7 @@ export default function ContactUs() {
 
           <div className="contact-item">
             <FaMapMarkerAlt className="contact-icon" />
-            <span>Chennai, Tamil Nadu, India</span>
+            <span>Cumbum, Theni, Tamil Nadu</span>
           </div>
         </div>
 
@@ -49,17 +75,34 @@ export default function ContactUs() {
           <h2 className="form-title">Send Us a Message</h2>
 
           <div className="floating-group">
-            <input type="text" name="name" onChange={handleChange} required />
+            <input
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              required
+            />
             <label>Your Name</label>
           </div>
 
           <div className="floating-group">
-            <input type="email" name="email" onChange={handleChange} required />
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
             <label>Your Email</label>
           </div>
 
           <div className="floating-group">
-            <textarea name="message" onChange={handleChange} required />
+            <textarea
+              name="message"
+              value={form.message}
+              onChange={handleChange}
+              required
+            />
             <label>Your Message</label>
           </div>
 

@@ -17,9 +17,7 @@ export default function Home() {
 
         {/* RIGHT: BIKE GRID */}
         <div style={styles.rightSection}>
-          <h2 style={styles.heading}>
-            <b>1000</b> Used Motorcycles in Cumbum
-          </h2>
+          <h2 style={styles.heading}>Used Motorcycles in Cumbum</h2>
 
           <BikeGrid filterType={filterType} />
         </div>

@@ -30,7 +30,7 @@ export default function Navbar() {
         <div style={styles.topBarContent}>
           <div style={styles.topBarLeft}>
             <div style={styles.topBarItem}>
-              <Phone size={14} /> <span>+91 7666377661</span>
+              <Phone size={14} /> <span>+91 8098322773</span>
             </div>
             <div style={styles.topBarItem}>
               <MapPin size={14} /> <span>Cumbum</span>

@@ -4,9 +4,11 @@ import Footer from "./components/Footer";
 import TestimonialSection from "./components/TestimonialSection";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import SellBikeModal from "./components/SellBikeModal";
 
 export default function Dashboard() {
   const [bikes, setBikes] = useState([]);
+  const [showSellModal, setShowSellModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -65,7 +67,9 @@ export default function Dashboard() {
               <div style={styles.featureItem}>🏆 Best Interest Rates</div>
             </div>
 
-            <button style={styles.exploreBtn}>Explore Vehicles</button>
+            <button style={styles.exploreBtn} onClick={() => navigate("/bike")}>
+              Explore Vehicles
+            </button>
           </div>
 
           <div style={styles.bannerRight}>
@@ -175,7 +179,7 @@ export default function Dashboard() {
         </div> */}
 
         <div style={styles.carouselContainer}>
-          {bikes.map((bike, i) => {
+          {bikes.slice(0, 5).map((bike, i) => {
             const original = Number(bike.price);
             const offer = Number(bike.offerPrice);
             const discount = Math.round(((original - offer) / original) * 100);
@@ -245,7 +249,9 @@ export default function Dashboard() {
             </div>
           ))}
 
-          <button style={styles.buyBtn}>Buy Now</button>
+          <button style={styles.buyBtn} onClick={() => navigate("/bike")}>
+            Buy Now
+          </button>
         </div>
 
         <img
@@ -279,8 +285,19 @@ export default function Dashboard() {
           ))}
         </div>
 
-        <button style={styles.sellBtn}>Sell Now</button>
+        <button
+          style={styles.sellBtn}
+          onClick={() => {
+            setShowSellModal(true);
+          }}
+        >
+          Sell Now
+        </button>
       </section>
+      <SellBikeModal
+        show={showSellModal}
+        close={() => setShowSellModal(false)}
+      />
       <TestimonialSection />
       {/* ---------------- FOOTER ---------------- */}
       <Footer />
@@ -308,7 +325,7 @@ export default function Dashboard() {
 
         <div>
           <h4>Contact</h4>
-          <p>+91 7666377661</p>
+          <p>+91 8098322773</p>
           <p>support@drivex.in</p>
           <p>Coimbatore, Bangalore</p>
         </div>

@@ -17,7 +17,7 @@ export default function Footer() {
     "CIN: U63040TZ2020PTC033680",
     "484, Kamaraj Road, Cumbum,",
     "Theni, 625 516",
-    "Email: support@gmail.com",
+    "Email: support@starmotors.com",
   ];
 
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ export default function Footer() {
       <div className="footer-column">
         <div className="footer-rowBetween">
           <h1 className="footer-logo">Star Motors</h1>
-          <button className="footer-callBtn"> +917666376661</button>
+          <button className="footer-callBtn"> +918098322773</button>
         </div>
 
         <p className="footer-text">
