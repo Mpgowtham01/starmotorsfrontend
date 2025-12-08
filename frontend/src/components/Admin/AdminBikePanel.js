@@ -3,7 +3,7 @@ import { FaEdit, FaTrash, FaPlus, FaTimes, FaSave } from "react-icons/fa";
 import AdminNavbar from "../AdminNavbar";
 import { Select } from "antd";
 
-const API_URL = "http://localhost:8080/bike";
+const API_URL = "https://starmotorsbackend.onrender.com/bike";
 
 export default function AdminBikePanel() {
   const [bikes, setBikes] = useState([]);

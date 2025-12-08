@@ -25,11 +25,14 @@ export default function ContactUs() {
 
     if (!validate()) return;
 
-    const res = await fetch("http://localhost:8080/bike/send-message", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
+    const res = await fetch(
+      "https://starmotorsbackend.onrender.com/bike/send-message",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      }
+    );
 
     const data = await res.json();
 
