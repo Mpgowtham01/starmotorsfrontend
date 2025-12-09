@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Input, notification } from "antd";
+import axios from "axios";
 
 export default function SellBikeModal({ show, close }) {
   const [form, setForm] = useState({
@@ -57,17 +58,41 @@ export default function SellBikeModal({ show, close }) {
   const submitForm = async () => {
     if (!validate()) return;
 
-    const res = await fetch(
-      "https://starmotorsbackend.onrender.com/bike/sell-bike",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      }
-    );
+    const res = await fetch("http://localhost:8080/bike/sell-bike", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
 
     const data = await res.json();
-    console.log(data);
+    const response = await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: { name: "Star Motors", email: "mpgowtham1902@gmail.com" },
+        replyTo: { email: form.email, name: form.name },
+
+        to: [{ email: "mpgowtham01@gmail.com", name: "Star Motors Admin" }],
+
+        subject: "New Contact Us Message - Star Motors",
+        htmlContent: `
+          <h2>New Sell Bike Lead</h2>
+        <p><b>Mobile:</b> ${form.mobile}</p>
+        <p><b>Email:</b> ${form.email}</p>
+        <p><b>Model:</b> ${form.model}</p>
+        <p><b>Year:</b> ${form.year}</p>
+        <p><b>Kms Driven:</b> ${form.kms}</p>
+        <p><b>Ownership:</b> ${form.ownership}</p>
+        <p><b>Pincode:</b> ${form.pincode}</p>
+        `,
+      },
+      {
+        headers: {
+          "api-key":
+            "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",
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (data.success) {
       notification.success({

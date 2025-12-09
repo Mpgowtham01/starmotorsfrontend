@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Css/ContactUs.css";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
+import axios from "axios";
 
 export default function ContactUs() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -20,27 +21,65 @@ export default function ContactUs() {
     return true;
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (!validate()) return;
+
+  //   const res = await fetch("http://localhost:8080/bike/send-message", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(form),
+  //   });
+
+  //   const data = await res.json();
+
+  //   if (data.success) {
+  //     toast.success("Message sent successfully!");
+  //     setForm({ name: "", email: "", message: "" });
+  //   } else {
+  //     toast.error("Something went wrong!");
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validate()) return;
 
-    const res = await fetch(
-      "https://starmotorsbackend.onrender.com/bike/send-message",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      }
-    );
+    try {
+      const response = await axios.post(
+        "https://api.brevo.com/v3/smtp/email",
+        {
+          sender: { name: "Star Motors", email: "mpgowtham1902@gmail.com" },
+          replyTo: { email: form.email, name: form.name },
 
-    const data = await res.json();
+          to: [{ email: "mpgowtham01@gmail.com", name: "Star Motors Admin" }],
 
-    if (data.success) {
+          subject: "New Contact Us Message - Star Motors",
+          htmlContent: `
+          <h2>New Contact Message</h2>
+          <p><b>Name:</b> ${form.name}</p>
+          <p><b>Email:</b> ${form.email}</p>
+          <p><b>Message:</b> ${form.message}</p>
+          <br/>
+          <p><b>Important:</b> Please Contact this Customer</p>
+        
+        `,
+        },
+        {
+          headers: {
+            "api-key":
+              "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",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       toast.success("Message sent successfully!");
       setForm({ name: "", email: "", message: "" });
-    } else {
-      toast.error("Something went wrong!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to send message");
     }
   };
 
